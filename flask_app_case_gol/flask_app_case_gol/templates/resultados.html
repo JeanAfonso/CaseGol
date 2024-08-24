@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados</title>
+</head>
+<body>
+    <h2>Resultados</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Ano</th>
+                <th>Mês</th>
+                <th>Mercado</th>
+                <th>RPK</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for voo in voos %}
+            <tr>
+                <td>{{ voo.ano }}</td>
+                <td>{{ voo.mes }}</td>
+                <td>{{ voo.mercado }}</td>
+                <td>{{ voo.rpk }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+     <!-- Gráfico de RPK -->
+     <div id="rpk-chart"></div>
+     <script>
+         var data = [{
+             x: [{% for voo in voos %}'{{ voo.ano }}-{{ voo.mes }}',{% endfor %}],
+             y: [{% for voo in voos %}{{ voo.rpk }},{% endfor %}],
+             type: 'scatter'
+         }];
+ 
+         Plotly.newPlot('rpk-chart', data);
+     </script>
+ </body>
+ </html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Bem-vindo, {{ current_user.username }}</h1>
+    <form method="POST" action="{{ url_for('filtro') }}">
+        <label for="mercado">Selecione o Mercado</label>
+        <select id="mercado" name="mercado">
+            {% for mercado in mercados %}
+            <option value="{{ mercado[0] }}">{{ mercado[0] }}</option>
+            {% endfor %}
+        </select>
+        <label for="ano_inicio">Ano Início</label>
+        <input type="number" id="ano_inicio" name="ano_inicio" required>
+        <label for="mes_inicio">Mês Início</label>
+        <input type="number" id="mes_inicio" name="mes_inicio" required>
+        <label for="ano_fim">Ano Fim</label>
+        <input type="number" id="ano_fim" name="ano_fim" required>
+        <label for="mes_fim">Mês Fim</label>
+        <input type="number" id="mes_fim" name="mes_fim" required>
+        <button type="submit">Filtrar</button>
+    </form>
+</body>
+</html>
