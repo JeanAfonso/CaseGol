@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <h2>Resultados</h2>
@@ -29,15 +30,30 @@
     </table>
 
      <!-- Gráfico de RPK -->
-     <div id="rpk-chart"></div>
-     <script>
-         var data = [{
-             x: [{% for voo in voos %}'{{ voo.ano }}-{{ voo.mes }}',{% endfor %}],
-             y: [{% for voo in voos %}{{ voo.rpk }},{% endfor %}],
-             type: 'scatter'
-         }];
- 
-         Plotly.newPlot('rpk-chart', data);
-     </script>
+        <div id="rpk-chart"></div>
+        <script>
+            // Gera os dados X e Y usando Jinja
+            var xData = [
+                {% for voo in voos %}
+                    '{{ voo.ano }}-{{ voo.mes }}'{{ "," if not loop.last }}
+                {% endfor %}
+            ];
+            
+            var yData = [
+                {% for voo in voos %}
+                    {{ voo.rpk }}{{ "," if not loop.last }}
+                {% endfor %}
+            ];
+
+            // Dados do gráfico
+            var data = [{
+                x: xData,
+                y: yData,
+                type: 'scatter'
+            }];
+
+            // Criação do gráfico com Plotly
+            Plotly.newPlot('rpk-chart', data);
+        </script>
  </body>
  </html>
