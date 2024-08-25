@@ -13,6 +13,9 @@ psycopg2 = "^2.9.9"
 pandas = "^2.2.2"
 ipython = "^8.26.0"
 flask-shell-ipython = "^0.5.1"
+flask-login = "^0.6.3"
+plotly = "^5.23.0"
+js = "^1.0"
 
 
 [build-system]
