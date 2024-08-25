@@ -1,13 +1,22 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+import hashlib
 import pandas as pd
 
 app = Flask(__name__)
-
-#DB config
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///voos.db"
+app.config['SECRET_KEY'] = 'jean123'
+
 db = SQLAlchemy()
 db.init_app(app)
+
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+
+def hash(txt):
+    hash_obj = hashlib.sha256(txt.encode('utf-8'))
+    return hash_obj.hexdigest()
 
 class Voo(db.Model): 
     id = db.Column(db.Integer, primary_key=True)
@@ -53,19 +62,79 @@ def create_and_populate_db():
         db.session.commit()
 
 # Seção de login
+class User(UserMixin, db.Model):
 
+    __tablename__ = "users"
+    
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(30), unique=True)
+    password = db.Column(db.String())
+    
+@login_manager.user_loader
+def load_user(id):
+    user = db.session.query(User).filter_by(id=id).first()
+    return user
 
-# Routes
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'GET':
+        return render_template('register.html')
+    elif request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        new_user = User(username=username, password=hash(password))
+        
+        db.session.add(new_user)
+        db.session.commit()
+        
+        login_user(new_user)
+        
+        return redirect(url_for('dashboard'))
+    
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+    elif request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        user = db.session.query(User).filter_by(username=username, password=hash(password)).first()
+        
+        if not user:
+            flash('Login inválido. Verifique suas credenciais e tente novamente.')
+        
+        login_user(user)
+        flash('login realizado com sucesso!')
+        return redirect(url_for('dashboard'))
+    
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
 @app.route('/')
-def home():
-    nome = "jean"
-    idade = 33
-    return render_template("dashboard.html", nome=nome, idade=idade)
+@login_required
+def dashboard():
+    mercados = Voo.query.with_entities(Voo.mercado).distinct().all()
+    return render_template('dashboard.html', mercados=mercados)
 
+@app.route('/filtro', methods=['POST'])
+@login_required
+def filtro():
+    mercado = request.form.get('mercado')
+    ano_inicio = int(request.form.get('ano_inicio'))
+    mes_inicio = int(request.form.get('mes_inicio'))
+    ano_fim = int(request.form.get('ano_fim'))
+    mes_fim = int(request.form.get('mes_fim'))
 
-@app.route('/dash')
-def exibir_grafico():
-    return render_template("dash.html")
+    voos = Voo.query.filter(Voo.mercado == mercado, Voo.ano >= ano_inicio, Voo.mes >= mes_inicio, Voo.ano <= ano_fim, Voo.mes <= mes_fim).all()
+    
+    return render_template('resultados.html', voos=voos)
 
 if __name__ == '__main__':
     db.create_all()
