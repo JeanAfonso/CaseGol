@@ -60,3 +60,59 @@ body {
     width: 100%;
     margin-bottom: 15px;
 }
+
+/* Estilo para o container dos filtros */
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px; /* Define uma largura máxima para o formulário */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra ao redor do formulário */
+    background-color: #fff; /* Cor de fundo para o formulário */
+    margin: 300px auto; /* Centraliza horizontalmente o formulário e adiciona espaçamento superior e inferior */
+}
+
+/* Estilos para o título dentro do container de filtros */
+.filter-container h3 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Estilos para os inputs e labels */
+.filter-container input,
+.filter-container label {
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+/* Estilos para o botão de filtro */
+.filter-container button {
+    margin-top: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px; /* Espaço entre os grupos de inputs */
+}
+
+.input-group-text {
+    font-family: Verdana, sans-serif;
+    width: 150px; /* Faz o input-group-text ocupar toda a largura disponível */
+    text-align: center; /* Alinha o texto ao centro */
+}
+
+.form-control {
+    width: 130px; /* Faz os inputs ocupar toda a largura disponível */
+}
+
+.input-group .form-control {
+    margin-bottom: 0; /* Remove a margem inferior para que os inputs se alinhem melhor */
+}
+
+.input-group .form-control + .form-control {
+    margin-top: -1px; /* Ajusta o espaçamento entre os inputs e o input-group-text */
+}
