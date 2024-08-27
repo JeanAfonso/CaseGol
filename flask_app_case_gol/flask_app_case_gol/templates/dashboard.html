@@ -1,28 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
+{% extends 'base.html' %}
+{% block conteudo %}
 <body>
-    <h1>Bem-vindo, {{ current_user.username }}</h1>
+    <h1 style="font-family: Verdana, sans-serif; font-weight: 500;">Bem-vindo, {{ current_user.username }}</h1>
     <form method="POST" action="{{ url_for('filtro') }}">
-        <label for="mercado">Selecione o Mercado: </label>
-        <select id="mercado" name="mercado">
+        <label for="mercado" style="display: inline-block; width: 150px; margin-right: 10px; font-family: Verdana, sans-serif;">Selecione o Mercado: </label>
+        <select class="form-select" id="mercado" name="mercado" style="display: inline-block; width: 150px; margin-bottom: 10px;">
             {% for mercado in mercados %}
             <option value="{{ mercado[0] }}">{{ mercado[0] }}</option>
             {% endfor %}
         </select><br>
-        <label for="ano_inicio">Ano Início</label>
-        <input type="number" id="ano_inicio" name="ano_inicio" required><br>
-        <label for="mes_inicio">Mês Início</label>
-        <input type="number" id="mes_inicio" name="mes_inicio" required><br>
-        <label for="ano_fim">Ano Fim</label>
-        <input type="number" id="ano_fim" name="ano_fim" required><br>
-        <label for="mes_fim">Mês Fim</label>
-        <input type="number" id="mes_fim" name="mes_fim" required><br>
-        <button type="submit">Filtrar</button>
+         <!-- Ano Início -->
+         <label for="ano_inicio" style="display: inline-block; width: 80px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; font-family: Verdana, sans-serif; vertical-align: middle;">Ano Início: </label>
+        <input class="form-control form-control-sm" type="number" id="ano_inicio" name="ano_inicio" aria-label=".form-control-sm example" style="width: 100px; display: inline-block; vertical-align: middle;" required><br>
+        
+        <!-- Mês Início -->
+        <label for="mes_inicio" style="display: inline-block; width: 80px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; font-family: Verdana, sans-serif; vertical-align: middle;">Mês Início: </label>
+        <input class="form-control form-control-sm" type="number" id="mes_inicio" name="mes_inicio" aria-label=".form-control-sm example" style="display: inline-block; width: 100px; margin-bottom: 10px;" required><br>
+
+        <!-- Ano Fim -->
+        <label for="ano_fim" style="display: inline-block; width: 80px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; font-family: Verdana, sans-serif; vertical-align: middle;">Ano Fim: </label>
+        <input class="form-control form-control-sm" type="number" id="ano_fim" name="ano_fim" aria-label=".form-control-sm example" style="display: inline-block; width: 100px; margin-bottom: 10px; vertical-align: middle;" required><br>
+
+        <!-- Mês Fim -->
+        <label for="mes_fim" style="display: inline-block; width: 80px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; font-family: Verdana, sans-serif; vertical-align: middle;">Mês Fim: </label>
+        <input  class="form-control form-control-sm" type="number" id="mes_fim" name="mes_fim" aria-label=".form-control-sm example" style="display: inline-block; width: 100px; margin-bottom: 10px; vertical-align: middle;" required><br>
+        
+        <button class="btn btn-primary" type="submit">Filtrar</button>
     </form>
 </body>
 </html>
+{% endblock conteudo %}

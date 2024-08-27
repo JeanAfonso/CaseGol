@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-</head>
+{% extends 'base.html' %}
+{% block conteudo %}
 <body>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Voltar para a seleção de mercado</a>
     <h2>Resultados</h2>
     <table>
         <thead>
@@ -57,3 +52,4 @@
         </script>
  </body>
  </html>
+ {% endblock conteudo %}

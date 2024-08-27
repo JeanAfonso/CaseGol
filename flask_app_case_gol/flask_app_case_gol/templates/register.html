@@ -1,15 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
+{% extends 'base.html' %}
+{% block conteudo %}
+
 <body>
-    <form method="POST" action="">
-        Usuário: <input type="text" id="" name="username"><br>
-        Senha: <input type="password" id="password" name="password"><br>
-        <input type="submit" value="Registrar">
-    </form>
+    <div class="container"></div>
+        <div class="login-container">
+            <h2>Cadastre-se</h2><br>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="">
+                <div class="mb-3">
+                    <label class="form-label" style="font-family: Verdana, sans-serif;">Usuário</label>
+                    <input type="text" class="form-control" id="username" name="username" aria-describedby="userHelp" style="width: 300px;">
+                    <div id="userHelp" class="form-text">Nunca compartilhe dados de acesso com ninguém.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label" style="font-family: Verdana, sans-serif;">Senha</label>
+                    <input type="password" class="form-control" id="password" name="password" style="width: 300px;">
+                </div>
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </form>
+            <p>Já tem uma conta? <a href="{{ url_for('login') }}">Faça seu Login</a>.</p>
+        </div>
+    </div>
 </body>
 </html>
+{% endblock conteudo %}
