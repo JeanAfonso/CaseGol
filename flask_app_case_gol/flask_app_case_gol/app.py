@@ -103,11 +103,12 @@ def login():
         
         user = db.session.query(User).filter_by(username=username, password=hash(password)).first()
         
-        if not user:
-            flash('Login inválido. Verifique suas credenciais e tente novamente.')
+        if user is None:
+            flash('Usuário e/ou senha inválidos tente novamente.', 'danger')
+            return redirect(url_for('login'))
         
         login_user(user)
-        flash('login realizado com sucesso!')
+
         return redirect(url_for('dashboard'))
     
 
