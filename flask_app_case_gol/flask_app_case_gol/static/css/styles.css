@@ -1,0 +1,62 @@
+/* Estilos gerais para o body */
+body {
+    margin: 0; /* Remove a margem padrão do body */
+    font-family: Arial, sans-serif;
+    background-color: #e75f10; /* Cor de fundo opcional */
+    padding-top: 0px; /* Espaço para a navbar fixa */
+    background-image: url('/static/images/aviao1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Estilos para o container da navbar */
+.navbar {
+    position: fixed; /* Mantém o navbar fixo no topo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Garante que o navbar fique acima de outros elementos */
+    background-color: #343a40; /* Cor de fundo para o navbar */
+    color: #fff; /* Cor do texto no navbar */
+    padding: 10px 20px; /* Ajusta o padding do navbar */
+    height: 56px; /* Altura fixa para o navbar (ajuste conforme necessário) */
+}
+
+/* Container principal para o login */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px; /* Subtrai a altura do navbar para ajustar o conteúdo */
+    padding: 20px;
+}
+
+/* Estilos para o container do login */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px; /* Define uma largura máxima para o formulário */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra ao redor do formulário */
+    background-color: #fff; /* Cor de fundo para o formulário */
+    margin: 0 auto; /* Centraliza horizontalmente o formulário */
+    position: relative;
+    top: 20%; /* Ajusta o formulário para que fique centralizado verticalmente */
+}
+
+/* Estilos para o título dentro do container de login */
+.login-container h2 {
+    margin-bottom: 20px;
+}
+
+/* Estilos para as mensagens de alerta */
+.alert {
+    width: 100%;
+    margin-bottom: 15px;
+}
