@@ -18,7 +18,7 @@
                 <td>{{ voo.ano }}</td>
                 <td>{{ voo.mes }}</td>
                 <td>{{ voo.mercado }}</td>
-                <td>{{ voo.rpk }}</td>
+                <td>{{ voo.rpk | int }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -36,7 +36,7 @@
             
             var yData = [
                 {% for voo in voos %}
-                    {{ voo.rpk }}{{ "," if not loop.last }}
+                    {{ voo.rpk | int }}{{ "," if not loop.last }}
                 {% endfor %}
             ];
 
