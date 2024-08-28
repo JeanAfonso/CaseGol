@@ -4,7 +4,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #e75f10; /* Cor de fundo opcional */
     padding-top: 0px; /* Espaço para a navbar fixa */
-    background-image: url('/static/images/aviao1.png');
+    background-image: url('/static/images/aviao2.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -44,7 +44,7 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra ao redor do formulário */
-    background-color: #fff; /* Cor de fundo para o formulário */
+    background-color:rgba(255, 255, 255, 0.4); /* Cor de fundo para o formulário */
     margin: 0 auto; /* Centraliza horizontalmente o formulário */
     position: relative;
     top: 20%; /* Ajusta o formulário para que fique centralizado verticalmente */
@@ -72,7 +72,7 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra ao redor do formulário */
-    background-color: #fff; /* Cor de fundo para o formulário */
+    background-color: rgba(255, 255, 255, 0.4); /* Cor de fundo para o formulário */
     margin: 300px auto; /* Centraliza horizontalmente o formulário e adiciona espaçamento superior e inferior */
 }
 
@@ -115,4 +115,108 @@ body {
 
 .input-group .form-control + .form-control {
     margin-top: -1px; /* Ajusta o espaçamento entre os inputs e o input-group-text */
+}
+
+/* Estilos para o botão de voltar */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-left: 10px;
+    background-color: grey;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para o título */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Estilos para a tabela de resultados */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.table-responsive {
+    max-width: 70%; /* Define a largura máxima da tabela como 70% do contêiner pai */
+    margin: 0 auto 20px auto; /* Centraliza a tabela horizontalmente e adiciona espaçamento abaixo */
+    max-height: 400px; /* Define uma altura máxima para o contêiner da tabela */
+    overflow-y: auto;
+}
+
+thead {
+    background-color: #007bff;
+    color: #fff;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+tbody td {
+    color: #555;
+}
+
+/* Estilos para o gráfico de RPK */
+#rpk-chart {
+    margin: 0 auto;
+    max-width: 800px; /* Limita a largura máxima do gráfico */
+    padding: auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Adicionando responsividade */
+@media (max-width: 768px) {
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+}
+
+.chart-container {
+    .chart-container {
+        width: 100%; /* Utiliza 100% da largura do contêiner pai para torná-lo responsivo */
+        max-width: 800px; /* Define uma largura máxima para o contêiner */
+        height: auto; /* Remove a altura fixa para que a altura do gráfico seja ajustada automaticamente */
+        margin: 20px auto; /* Centraliza o gráfico horizontalmente */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra ao redor do contêiner do gráfico */
+        background-color: #ffffff; /* Cor de fundo para o contêiner do gráfico */
+        border-radius: 8px; /* Bordas arredondadas para o contêiner do gráfico */
+        padding: 15px; /* Espaçamento interno para o contêiner do gráfico */
+        overflow: hidden; /* Garante que o conteúdo do contêiner não transborde */
+    }
+}
+
+.text-center {
+    font-size: 60px;
+    color: #ddd;
 }
