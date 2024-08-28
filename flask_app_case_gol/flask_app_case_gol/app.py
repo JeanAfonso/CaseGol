@@ -40,9 +40,7 @@ def create_and_populate_db():
     app.before_request_funcs[None].remove(create_and_populate_db)
     db.create_all()
 
-    # Verificar se a tabela já contém dados
     if Voo.query.count() == 0:
-        # Carregar os dados do CSV
         df = pd.read_csv(
             "/home/jean/CaseGol/Dados_Estatisticos.csv",
             delimiter=";",
@@ -51,14 +49,12 @@ def create_and_populate_db():
             skiprows=1,
         )
 
-        # Filtrar os dados
         df_filtered = df[
             (df["EMPRESA_SIGLA"] == "GLO")
             & (df["GRUPO_DE_VOO"] == "REGULAR")
             & (df["NATUREZA"] == "DOMÉSTICA")
         ].copy()
 
-        # Agrupar e criar a coluna MERCADO
         df_filtered.loc[:, "MERCADO"] = df_filtered.apply(
             lambda row: "".join(
                 sorted(
@@ -71,12 +67,10 @@ def create_and_populate_db():
             axis=1,
         )
 
-        # Criar um novo DataFrame com as colunas necessárias
         df_final = (
             df_filtered.groupby(["ANO", "MES", "MERCADO"])["RPK"].sum().reset_index()
         )
 
-        # Inserir os dados no banco de dados
         for _, row in df_final.iterrows():
             voo = Voo(
                 ano=row["ANO"], mes=row["MES"], mercado=row["MERCADO"], rpk=row["RPK"]
@@ -184,7 +178,9 @@ def filtro():
 
 if __name__ == "__main__":
     db.create_all()
-    
+
+
+# Para usar o shell do flask para debug
 @app.shell_context_processor
 def make_shell_context():
-    return {'db': db, 'User': User, 'Voo': Voo, 'hash': hash}
+    return {"db": db, "User": User, "Voo": Voo, "hash": hash}
