@@ -2,7 +2,7 @@
 {% block conteudo %}
 <body>
     <div class="filter-container">
-        <h1 style="font-family: Verdana, sans-serif; font-weight: 500;">Bem-vindo, {{ current_user.username }}</h1>
+        <h1 style="font-family: Verdana, sans-serif; font-weight: 600;">Bem-vindo, {{ current_user.username }}</h1>
         <form method="POST" action="{{ url_for('filtro') }}">
             <label for="mercado" style="display: inline-block; width: 172px; margin-right: 10px; font-family: Arial, sans-serif; font-weight: 600;">Selecione o Mercado: </label>
             <select class="form-select" id="mercado" name="mercado" style="display: inline-block; width: 150px; margin-bottom: 10px;">
@@ -11,12 +11,12 @@
                 {% endfor %}
             </select><br>
             <div class="input-group">
-                <span class="input-group-text" style="background-color: lightgrey;">Mês e Ano início</span>
+                <span class="input-group-text" style="background-color: lightgrey;">Data início</span>
                 <input class="form-control" type="number" id="mes_inicio" name="mes_inicio" min="1" max="12" required>
                 <input class="form-control" type="number" id="ano_inicio" name="ano_inicio" min="{{ ano_min }}" max="{{ ano_max }}" required>
             </div>
             <div class="input-group">
-                <span class="input-group-text" style="background-color: lightgrey;">Mês e Ano fim</span>
+                <span class="input-group-text" style="background-color: lightgrey;">Data fim</span>
                 <input class="form-control" type="number" id="mes_fim" name="mes_fim" min="1" max="12" required>
                 <input class="form-control" type="number" id="ano_fim" name="ano_fim" min="{{ ano_min }}" max="{{ ano_max }}" required>
             </div>
