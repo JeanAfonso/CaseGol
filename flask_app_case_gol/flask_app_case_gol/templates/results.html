@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<body>
+    <!-- Botão de voltar -->
+    <a href="{{ url_for('dashboard') }}" class="btn btn-primary mb-4">Voltar para a seleção de mercado</a>
+    
+    <!-- Título da página -->
+    <h2 class="text-center mb-4">Resultados</h2>
+    
+    <!-- Tabela de resultados -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Ano</th>
+                    <th scope="col">Mês</th>
+                    <th scope="col">Mercado</th>
+                    <th scope="col">RPK</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flight in flights %}
+                <tr>
+                    <td>{{ flight.ano }}</td>
+                    <td>{{ flight.mes }}</td>
+                    <td>{{ flight.mercado }}</td>
+                    <td>{{ flight.rpk | int }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Gráfico de RPK -->
+    <div id="rpk-chart" class="chart-container mt-4"></div>
+
+    <script>
+        // Gera os dados X e Y usando Jinja
+        var xData = [
+            {% for flight in flights %}
+                '{{ flight.ano }}-{{ flight.mes }}'{{ "," if not loop.last }}
+            {% endfor %}
+        ];
+        
+        var yData = [
+            {% for flight in flights %}
+                {{ flight.rpk | int }}{{ "," if not loop.last }}
+            {% endfor %}
+        ];
+
+        // Dados do gráfico
+        var data = [{
+            x: xData,
+            y: yData,
+            type: 'scatter'
+        }];
+
+        var layout = {
+            title: 'Gráfico de RPK',
+            autosize: true,  // Permite que o gráfico seja redimensionado automaticamente
+            height: 600,
+            margin: {
+                l: 50,
+                r: 50,
+                b: 50,
+                t: 50
+            }
+        };
+
+        // Opções de configuração para torná-lo responsivo
+        var config = {
+            responsive: true
+        };
+
+        // Criação do gráfico com Plotly
+        Plotly.newPlot('rpk-chart', data, layout);
+    </script>
+</body>
+</html>
+{% endblock conteudo %}

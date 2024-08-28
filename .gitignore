@@ -1,0 +1,9 @@
+*.py[cod]
+__pycache__/
+tests/__pycache__/
+*.pyc
+*.db
+instance/
+.env
+Dados_Estatisticos.csv
+flask_app_case_gol/flask_app_case_gol/static/images/

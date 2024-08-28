@@ -10,9 +10,15 @@ from flask_login import (
 )
 import hashlib
 import pandas as pd
+import os
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///voos.db"
+
+if os.getenv("FLASK_ENV") == "testing":
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test_flights.db"
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///flights.db"
+
 app.config["SECRET_KEY"] = "jean123"
 
 db = SQLAlchemy()
@@ -27,7 +33,7 @@ def hash(txt):
     return hash_obj.hexdigest()
 
 
-class Voo(db.Model):
+class Flight(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ano = db.Column(db.Integer)
     mes = db.Column(db.Integer)
@@ -40,7 +46,7 @@ def create_and_populate_db():
     app.before_request_funcs[None].remove(create_and_populate_db)
     db.create_all()
 
-    if Voo.query.count() == 0:
+    if Flight.query.count() == 0:
         df = pd.read_csv(
             "/home/jean/CaseGol/Dados_Estatisticos.csv",
             delimiter=";",
@@ -72,10 +78,10 @@ def create_and_populate_db():
         )
 
         for _, row in df_final.iterrows():
-            voo = Voo(
+            flight = Flight(
                 ano=row["ANO"], mes=row["MES"], mercado=row["MERCADO"], rpk=row["RPK"]
             )
-            db.session.add(voo)
+            db.session.add(flight)
 
         db.session.commit()
 
@@ -147,33 +153,33 @@ def logout():
 @app.route("/")
 @login_required
 def dashboard():
-    ano_min = db.session.query(db.func.min(Voo.ano)).scalar()
-    ano_max = db.session.query(db.func.max(Voo.ano)).scalar()
+    year_min = db.session.query(db.func.min(Flight.ano)).scalar()
+    year_max = db.session.query(db.func.max(Flight.ano)).scalar()
 
-    mercados = Voo.query.with_entities(Voo.mercado).distinct().all()
+    markets = Flight.query.with_entities(Flight.mercado).distinct().all()
     return render_template(
-        "dashboard.html", mercados=mercados, ano_min=ano_min, ano_max=ano_max
+        "dashboard.html", markets=markets, year_min=year_min, year_max=year_max
     )
 
 
-@app.route("/filtro", methods=["POST"])
+@app.route("/filter", methods=["POST"])
 @login_required
-def filtro():
-    mercado = request.form.get("mercado")
-    ano_inicio = int(request.form.get("ano_inicio"))
-    mes_inicio = int(request.form.get("mes_inicio"))
-    ano_fim = int(request.form.get("ano_fim"))
-    mes_fim = int(request.form.get("mes_fim"))
+def filter():
+    market = request.form.get("market")
+    start_year = int(request.form.get("start_year"))
+    start_month = int(request.form.get("start_month"))
+    end_year = int(request.form.get("end_year"))
+    end_month = int(request.form.get("end_month"))
 
-    voos = Voo.query.filter(
-        Voo.mercado == mercado,
-        Voo.ano >= ano_inicio,
-        Voo.mes >= mes_inicio,
-        Voo.ano <= ano_fim,
-        Voo.mes <= mes_fim,
+    flights = Flight.query.filter(
+        Flight.mercado == market,
+        Flight.ano >= start_year,
+        Flight.mes >= start_month,
+        Flight.ano <= end_year,
+        Flight.mes <= end_month,
     ).all()
 
-    return render_template("resultados.html", voos=voos)
+    return render_template("results.html", flights=flights)
 
 
 if __name__ == "__main__":
@@ -183,4 +189,4 @@ if __name__ == "__main__":
 # Para usar o shell do flask para debug
 @app.shell_context_processor
 def make_shell_context():
-    return {"db": db, "User": User, "Voo": Voo, "hash": hash}
+    return {"db": db, "User": User, "Flight": Flight, "hash": hash}
