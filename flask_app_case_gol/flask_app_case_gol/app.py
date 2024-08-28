@@ -56,10 +56,10 @@ def create_and_populate_db():
             (df["EMPRESA_SIGLA"] == "GLO")
             & (df["GRUPO_DE_VOO"] == "REGULAR")
             & (df["NATUREZA"] == "DOMÉSTICA")
-        ]
+        ].copy()
 
         # Agrupar e criar a coluna MERCADO
-        df_filtered["MERCADO"] = df_filtered.apply(
+        df_filtered.loc[:, "MERCADO"] = df_filtered.apply(
             lambda row: "".join(
                 sorted(
                     [
@@ -184,3 +184,7 @@ def filtro():
 
 if __name__ == "__main__":
     db.create_all()
+    
+@app.shell_context_processor
+def make_shell_context():
+    return {'db': db, 'User': User, 'Voo': Voo, 'hash': hash}
