@@ -43,7 +43,7 @@ def create_and_populate_db():
 
     if Flight.query.count() == 0:
         df = pd.read_csv(
-            "/home/jean/CaseGol/Dados_Estatisticos.csv",
+            "data/Dados_Estatisticos.csv",
             delimiter=";",
             quotechar='"',
             skipinitialspace=True,
