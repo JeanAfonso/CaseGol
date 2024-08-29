@@ -3,8 +3,14 @@ import os
 
 import pandas as pd
 from flask import Flask, flash, redirect, render_template, request, url_for
-from flask_login import (LoginManager, UserMixin, current_user, login_required,
-                         login_user, logout_user)
+from flask_login import (
+    LoginManager,
+    UserMixin,
+    current_user,
+    login_required,
+    login_user,
+    logout_user,
+)
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -36,16 +42,18 @@ class Flight(db.Model):
     rpk = db.Column(db.Float)
 
 
-''' Esse decorator faz com que a função abaixo execute antes de cada solicitação HTTP, 
+""" Esse decorator faz com que a função abaixo execute antes de cada solicitação HTTP, 
 tive que usa-la no lugar do @app.before_first_request pois foi deprecada, 
-e ai precisei criar na linha 44 para remover a função e não excuta-la mais de uma vez durante a primeira solicitação.'''
+e ai precisei criar na linha 44 para remover a função e não excuta-la mais de uma vez durante a primeira solicitação."""
+
+
 @app.before_request
 def create_and_populate_db():
     app.before_request_funcs[None].remove(create_and_populate_db)
     db.create_all()
-   
-    ''' Legenda: df se refere a uma estrutura de dados chamada DataFrame, 
-     algo parecido com uma Matriz, nas pesquisas de como fazer me deparei com esse nome então achei valido nomear como df '''
+
+    """ Legenda: df se refere a uma estrutura de dados chamada DataFrame, 
+     algo parecido com uma Matriz, nas pesquisas de como fazer me deparei com esse nome então achei valido nomear como df """
     if Flight.query.count() == 0:
         df = pd.read_csv(
             "data/Dados_Estatisticos.csv",
@@ -61,9 +69,8 @@ def create_and_populate_db():
             & (df["NATUREZA"] == "DOMÉSTICA")
         ].copy()
 
-        
-        ''' Aqui na linha 65 a 71 é onde coloco em ordem alfabetica as siglas que vão para a tabela
-        no campo mercado e onde posteriomente vai aparecer na pesquisa de mercado para puxar o RPK '''
+        """ Aqui na linha 65 a 71 é onde coloco em ordem alfabetica as siglas que vão para a tabela
+        no campo mercado e onde posteriomente vai aparecer na pesquisa de mercado para puxar o RPK """
         df_filtered.loc[:, "MERCADO"] = df_filtered.apply(
             lambda row: "".join(
                 sorted(
@@ -76,7 +83,6 @@ def create_and_populate_db():
             axis=1,
         )
 
-        
         # Aqui ele cria outra estrutura de DataFrame com as colunas que são necessarias para popular a tabela
         df_final = (
             df_filtered.groupby(["ANO", "MES", "MERCADO"])["RPK"].sum().reset_index()
@@ -190,9 +196,3 @@ def filter():
 
 if __name__ == "__main__":
     db.create_all()
-
-
-# Para usar o shell do flask para debug
-@app.shell_context_processor
-def make_shell_context():
-    return {"db": db, "User": User, "Flight": Flight, "hash": hash}
