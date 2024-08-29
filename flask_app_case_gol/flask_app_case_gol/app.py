@@ -1,16 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import (
-    LoginManager,
-    UserMixin,
-    login_user,
-    logout_user,
-    login_required,
-    current_user,
-)
 import hashlib
-import pandas as pd
 import os
+
+import pandas as pd
+from flask import Flask, flash, redirect, render_template, request, url_for
+from flask_login import (LoginManager, UserMixin, current_user, login_required,
+                         login_user, logout_user)
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
