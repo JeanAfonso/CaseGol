@@ -5,6 +5,7 @@
     
     <h2 class="text-center mb-4">Resultados</h2>
     
+    <!-- Div responsavel por criar a tabela de resultados -->
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead class="table-primary">
@@ -34,20 +35,20 @@
 
         var xData = [
             {% for flight in flights %}
-                '{{ flight.ano }}-{{ flight.mes }}'{{ "," if not loop.last }}
+                '{{ flight.ano }}-{{ flight.mes }}'{{ "," if not loop.last }} /* aqui verifica se a interação não é a ultima do loop e adiciona uma virgula para adiconar o proximo valor a ser exibido no grafico */
             {% endfor %}
         ];
         
         var yData = [
             {% for flight in flights %}
-                {{ flight.rpk | int }}{{ "," if not loop.last }}
+                {{ flight.rpk | int }}{{ "," if not loop.last }} 
             {% endfor %}
         ];
 
         var data = [{
             x: xData,
             y: yData,
-            type: 'scatter'
+            type: 'scatter' /* se quiser vizualizar em barras é só mudar esse type para bar */
         }];
 
         var layout = {
