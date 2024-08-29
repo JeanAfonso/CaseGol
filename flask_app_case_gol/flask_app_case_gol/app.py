@@ -42,9 +42,9 @@ class Flight(db.Model):
     rpk = db.Column(db.Float)
 
 
-""" Esse decorator faz com que a função abaixo execute antes de cada solicitação HTTP, 
+""" Esse decorator faz com que a função abaixo execute antes de cada request HTTP, 
 tive que usa-la no lugar do @app.before_first_request pois foi deprecada, 
-e ai precisei criar na linha 44 para remover a função e não excuta-la mais de uma vez durante a primeira solicitação."""
+e ai precisei criar na linha 44 para remover a função e não excuta-la mais de uma vez durante a primeira request."""
 
 
 @app.before_request
