@@ -65,23 +65,8 @@ Requisitos do projeto:
 4. **Configure o banco de dados:**
     - Base de dados: https://sistemas.anac.gov.br/dadosabertos/Voos%20e%20opera%C3%A7%C3%B5es%20a%C3%A9reas/Dados%20Estat%C3%ADsticos%20do%20Transporte%20A%C3%A9reo/
     
-    O projeto utiliza um banco de dados SQLite. Se necessário, você pode criar e popular o banco de dados com:
+    O projeto utiliza um banco de dados SQLite. Se necessário, você pode criar e popular o banco de dados fazendo o download do arquivo Dados_Estatisticos.csv e jogue na pasta flask_app_case_gol/data.
 
-    Baixe o arquivo csv Dados_Estatisticos.csv
-
-    e no app.py Linha 51 mude o caminho para a biblioteca pandas acessar o arquivo:
-
-    ```bash
-    if Flight.query.count() == 0:
-        df = pd.read_csv(
-            "/home/jean/CaseGol/Dados_Estatisticos.csv", <------- Altere aqui para o caminho onde o CSV esta salvo
-            delimiter=";",
-            quotechar='"',
-            skipinitialspace=True,
-            skiprows=1,
-        )
-    ```
-    
 5. **Execute o servidor:**
 
     Para rodar o servidor Flask, você pode usar:
